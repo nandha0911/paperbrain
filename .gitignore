@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Environment variables (NEVER push API keys to GitHub!)
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs & Runtime Data
+logs/
+*.log
+uploads/
+data/
+chroma_db/
+
+# Gemini tooling
+.gemini/

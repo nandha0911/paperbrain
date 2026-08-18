@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs & Data (will be regenerated)
+logs/
+*.log
+
+# Local uploads (users upload fresh on the server)
+uploads/
+data/
+
+# ChromaDB (will be regenerated on the server)
+chroma_db/
+
+# Gemini config
+.gemini/
+
+# Git
+.git/
+.gitignore

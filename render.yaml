@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: paperbrain
+    runtime: docker
+    plan: free
+    envVars:
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: GEMINI_API_KEY
+        sync: false  # You'll set this manually in the Render dashboard
+      - key: GEMINI_MODEL
+        value: gemini-3.6-flash
+      - key: API_HOST
+        value: 127.0.0.1
+      - key: API_PORT
+        value: 8000
