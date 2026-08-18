@@ -44,6 +44,9 @@ def api_list_documents() -> list[dict]:
 
 def api_upload(file_bytes: bytes, filename: str) -> dict:
     try:
+        if not file_bytes:
+            return {"error": "File buffer is empty (0 bytes)."}
+
         file_hash = compute_file_hash(file_bytes)
         existing_filename = vector_store.document_exists(file_hash)
         
@@ -60,7 +63,7 @@ def api_upload(file_bytes: bytes, filename: str) -> dict:
         chunks, page_count, _ = pdf_service.process_pdf(file_bytes, safe_name)
         
         if not chunks:
-            return {"error": "No extractable text found."}
+            return {"error": "No extractable text found in this PDF."}
 
         doc_info = DocumentInfo(
             filename=safe_name,
@@ -68,11 +71,10 @@ def api_upload(file_bytes: bytes, filename: str) -> dict:
             file_size_bytes=len(file_bytes),
             page_count=page_count,
             chunk_count=len(chunks),
-            status=ProcessingStatus.PROCESSING,
+            status=ProcessingStatus.COMPLETED,
         )
         
         stored_count = vector_store.add_chunks(chunks, doc_info)
-        doc_info.status = ProcessingStatus.COMPLETED
         doc_info.chunk_count = stored_count
         
         return {

@@ -140,6 +140,7 @@ with st.sidebar:
     )
 
     if uploaded_files:
+        newly_processed = False
         for uf in uploaded_files:
             # Check if already in current session documents
             already_in_list = any(
@@ -150,20 +151,25 @@ with st.sidebar:
                 continue
 
             with st.spinner(f"Processing {uf.name}…"):
-                result = api_upload(uf.read(), uf.name)
+                file_bytes = uf.getvalue()
+                result = api_upload(file_bytes, uf.name)
 
             if result is None or "error" in result:
-                st.error(f"❌ Upload failed: {result.get('error', 'Unknown error')}")
+                st.error(f"❌ Upload failed: {result.get('error', 'Unknown error') if result else 'No response'}")
             elif result.get("already_exists"):
                 render_upload_duplicate(result.get("filename", uf.name))
-                refresh_state()
+                newly_processed = True
             else:
                 render_upload_success(
                     result.get("filename", uf.name),
                     result.get("page_count", 0),
                     result.get("chunk_count", 0),
                 )
-                refresh_state()
+                newly_processed = True
+
+        if newly_processed:
+            refresh_state()
+            st.rerun()
 
     st.markdown("---")
 
