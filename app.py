@@ -72,75 +72,15 @@ if "top_k" not in st.session_state:
 if "api_reachable" not in st.session_state:
     st.session_state.api_reachable = False
 
-BASE = config.API_BASE_URL
-
-
-# ─── API Helpers ──────────────────────────────────────────────────────────────
-
-def api_health() -> dict:
-    try:
-        r = requests.get(f"{BASE}/health", timeout=5)
-        return r.json()
-    except Exception:
-        return {}
-
-
-def api_list_documents() -> list[dict]:
-    try:
-        r = requests.get(f"{BASE}/documents", timeout=8)
-        if r.status_code == 200:
-            return r.json().get("documents", [])
-    except Exception:
-        pass
-    return []
-
-
-def api_upload(file_bytes: bytes, filename: str) -> dict | None:
-    try:
-        r = requests.post(
-            f"{BASE}/upload",
-            files={"file": (filename, file_bytes, "application/pdf")},
-            timeout=300,
-        )
-        return r.json()
-    except Exception as e:
-        return {"error": str(e)}
-
-
-def api_chat(question: str, session_id: str, top_k: int) -> dict | None:
-    try:
-        r = requests.post(
-            f"{BASE}/chat",
-            json={"question": question, "session_id": session_id, "top_k": top_k},
-            timeout=120,
-        )
-        return r.json()
-    except Exception as e:
-        return {"error": str(e)}
-
-
-def api_delete_document(filename: str) -> bool:
-    try:
-        r = requests.delete(f"{BASE}/documents/{filename}", timeout=15)
-        return r.status_code == 200
-    except Exception:
-        return False
-
-
-def api_delete_all() -> bool:
-    try:
-        r = requests.delete(f"{BASE}/documents", timeout=30)
-        return r.status_code == 200
-    except Exception:
-        return False
-
-
-def api_clear_history(session_id: str) -> bool:
-    try:
-        r = requests.delete(f"{BASE}/history/{session_id}", timeout=10)
-        return r.status_code == 200
-    except Exception:
-        return False
+from local_api import (
+    api_health,
+    api_list_documents,
+    api_upload,
+    api_chat,
+    api_delete_document,
+    api_delete_all,
+    api_clear_history,
+)
 
 
 

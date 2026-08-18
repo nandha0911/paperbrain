@@ -32,8 +32,8 @@ def api_health() -> dict:
             },
             "cache": query_cache.stats,
         }
-    except Exception:
-        return {}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 def api_list_documents() -> list[dict]:
     try:
@@ -94,21 +94,21 @@ def api_chat(question: str, session_id: str, top_k: int) -> dict:
 
 def api_delete_document(filename: str) -> bool:
     try:
-        success = vector_store.remove_document(filename)
-        return success
+        deleted = vector_store.delete_document(filename)
+        return deleted > 0
     except Exception:
         return False
 
 def api_delete_all() -> bool:
     try:
-        vector_store.clear_all()
+        vector_store.delete_all_documents()
         return True
     except Exception:
         return False
 
 def api_clear_history(session_id: str) -> bool:
     try:
-        rag_service.memory.clear(session_id)
+        rag_service.clear_history(session_id)
         return True
     except Exception:
         return False
