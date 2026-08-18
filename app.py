@@ -61,7 +61,12 @@ if "documents" not in st.session_state:
 if "llm_available" not in st.session_state:
     st.session_state.llm_available = False
 if "llm_model" not in st.session_state:
-    st.session_state.llm_model = config.OLLAMA_MODEL
+    if config.LLM_PROVIDER == "gemini":
+        st.session_state.llm_model = config.GEMINI_MODEL
+    elif config.LLM_PROVIDER == "openai":
+        st.session_state.llm_model = config.OPENAI_MODEL
+    else:
+        st.session_state.llm_model = config.OLLAMA_MODEL
 if "top_k" not in st.session_state:
     st.session_state.top_k = config.TOP_K
 if "api_reachable" not in st.session_state:
@@ -146,7 +151,8 @@ def refresh_state() -> None:
         st.session_state.api_reachable = True
         llm_info = health.get("llm", {})
         st.session_state.llm_available = llm_info.get("available", False)
-        st.session_state.llm_model = llm_info.get("model", config.OLLAMA_MODEL)
+        _default_model = config.GEMINI_MODEL if config.LLM_PROVIDER == "gemini" else config.OLLAMA_MODEL
+        st.session_state.llm_model = llm_info.get("model", _default_model)
     else:
         st.session_state.api_reachable = False
         st.session_state.llm_available = False

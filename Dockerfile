@@ -6,6 +6,7 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
@@ -18,10 +19,10 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p uploads data logs chroma_db
 
+# Fix line endings for Linux and make executable
+RUN dos2unix start.sh && chmod +x start.sh
+
 # Expose both ports (API + Streamlit)
 EXPOSE 8000 8501
 
-# Start script: run both backend API and Streamlit frontend
-COPY start.sh .
-RUN chmod +x start.sh
 CMD ["./start.sh"]
