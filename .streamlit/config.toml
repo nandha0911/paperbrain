@@ -1,7 +1,15 @@
 [theme]
-base="light"
-primaryColor="#1d4ed8"
-backgroundColor="#ffffff"
-secondaryBackgroundColor="#0f172a"
-textColor="#1b2029"
-font="sans serif"
+base = "dark"
+primaryColor = "#06B6D4"
+backgroundColor = "#0A0D14"
+secondaryBackgroundColor = "#111827"
+textColor = "#F8FAFC"
+font = "sans serif"
+
+[client]
+showErrorDetails = false
+
+[server]
+headless = true
+enableCORS = false
+enableXsrfProtection = false

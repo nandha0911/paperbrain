@@ -7,22 +7,19 @@ Midnight Luxe & Glassmorphism design system for PaperBrain AI.
 CUSTOM_CSS = """
 <style>
 /* ── Google Fonts ── */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* ── Design System Variables ── */
+/* ── Global CSS Variables ── */
 :root {
     --bg-canvas:       #0A0D14;
-    --bg-surface:      rgba(17, 24, 39, 0.75);
-    --bg-card:         rgba(22, 27, 34, 0.65);
+    --bg-card:         rgba(22, 27, 34, 0.7);
     --bg-card-hover:   rgba(30, 41, 59, 0.85);
     --border-subtle:   rgba(255, 255, 255, 0.08);
-    --border-glow:     rgba(6, 182, 212, 0.4);
+    --border-cyan:     rgba(6, 182, 212, 0.35);
     
     --accent-cyan:     #06B6D4;
     --accent-blue:     #3B82F6;
-    --accent-emerald:  #10B981;
-    --gradient-brand:  linear-gradient(135deg, #06B6D4 0%, #3B82F6 50%, #8B5CF6 100%);
-    --gradient-glow:   radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.15), transparent 70%);
+    --gradient-brand:  linear-gradient(135deg, #06B6D4 0%, #3B82F6 60%, #8B5CF6 100%);
 
     --text-primary:    #F8FAFC;
     --text-secondary:  #94A3B8;
@@ -39,13 +36,7 @@ CUSTOM_CSS = """
     --transition:      all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Global Canvas ── */
-html, body, [class*="css"] {
-    font-family: var(--font-body) !important;
-    background-color: var(--bg-canvas) !important;
-    color: var(--text-primary) !important;
-}
-
+/* ── Canvas & Background ── */
 .stApp {
     background: 
         radial-gradient(ellipse 80% 50% at 50% -20%, rgba(6, 182, 212, 0.12), transparent),
@@ -54,15 +45,20 @@ html, body, [class*="css"] {
     color: var(--text-primary) !important;
 }
 
-/* ── Protect Material Icons ── */
-[data-testid="stIconMaterial"], 
-.material-symbols-rounded,
-[class*="material-symbols"],
-[data-testid="stSidebarCollapseButton"] * {
-    font-family: 'Material Symbols Rounded', sans-serif !important;
+/* ── Typography (Targeted to prevent breaking icons) ── */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading) !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    letter-spacing: -0.02em;
 }
 
-/* ── Hide Streamlit default Deploy button & footer ── */
+p, label, li {
+    font-family: var(--font-body) !important;
+    color: var(--text-primary) !important;
+}
+
+/* ── Hide Streamlit default Deploy button, header & footer ── */
 .stDeployButton, 
 [data-testid="stDeployButton"],
 footer, 
@@ -72,36 +68,19 @@ header[data-testid="stHeader"] {
 
 /* ── Sidebar ── */
 [data-testid="stSidebar"] {
-    background: rgba(13, 17, 23, 0.85) !important;
+    background: rgba(13, 17, 23, 0.92) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
     border-right: 1px solid var(--border-subtle) !important;
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4) !important;
 }
 [data-testid="stSidebar"] .block-container {
     padding: 2rem 1.25rem !important;
 }
 
-/* Force dark sidebar text */
-[data-testid="stSidebar"] p,
-[data-testid="stSidebar"] h1,
-[data-testid="stSidebar"] h2,
-[data-testid="stSidebar"] h3,
-[data-testid="stSidebar"] h4,
-[data-testid="stSidebar"] span,
-[data-testid="stSidebar"] label {
-    color: var(--text-primary) !important;
-    font-family: var(--font-heading) !important;
-}
-[data-testid="stSidebar"] hr {
-    border-top: 1px solid var(--border-subtle) !important;
-    margin: 1.25rem 0 !important;
-}
-
 /* ── Sidebar Title ── */
 .sidebar-title {
     font-family: var(--font-heading) !important;
-    font-size: 1.35rem;
+    font-size: 1.4rem;
     font-weight: 800;
     background: var(--gradient-brand);
     -webkit-background-clip: text;
@@ -122,41 +101,30 @@ header[data-testid="stHeader"] {
     margin-bottom: 1.5rem;
 }
 
-/* ── Modern File Uploader Dropzone ── */
+/* ── File Uploader Styling (Clean & Native) ── */
 [data-testid="stFileUploader"] {
     background: transparent !important;
+    margin-bottom: 1rem !important;
 }
-[data-testid="stFileUploadDropzone"] {
-    background: rgba(22, 27, 34, 0.5) !important;
-    border: 1px dashed rgba(6, 182, 212, 0.3) !important;
+[data-testid="stFileUploader"] > section {
+    background: rgba(22, 27, 34, 0.6) !important;
+    border: 1px dashed var(--border-cyan) !important;
     border-radius: var(--radius-md) !important;
-    padding: 1.25rem 1rem !important;
+    padding: 1rem !important;
     transition: var(--transition) !important;
 }
-[data-testid="stFileUploadDropzone"]:hover {
+[data-testid="stFileUploader"] > section:hover {
+    background: rgba(30, 41, 59, 0.85) !important;
     border-color: var(--accent-cyan) !important;
-    background: rgba(30, 41, 59, 0.7) !important;
     box-shadow: 0 0 20px rgba(6, 182, 212, 0.15) !important;
 }
-[data-testid="stFileUploadDropzone"] button {
-    background: rgba(255, 255, 255, 0.08) !important;
-    color: var(--text-primary) !important;
-    border: 1px solid var(--border-subtle) !important;
-    border-radius: var(--radius-sm) !important;
-    font-family: var(--font-body) !important;
-    font-size: 0.8rem !important;
-    font-weight: 600 !important;
-    transition: var(--transition) !important;
-}
-[data-testid="stFileUploadDropzone"] button:hover {
-    background: var(--accent-cyan) !important;
-    color: #0A0D14 !important;
-    border-color: var(--accent-cyan) !important;
+[data-testid="stFileUploader"] small {
+    color: var(--text-secondary) !important;
 }
 
 /* ── Document Cards ── */
 .doc-card {
-    background: rgba(22, 27, 34, 0.6);
+    background: rgba(22, 27, 34, 0.7);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
     padding: 0.85rem 1rem;
@@ -165,13 +133,12 @@ header[data-testid="stHeader"] {
     align-items: center;
     gap: 12px;
     transition: var(--transition);
-    backdrop-filter: blur(8px);
 }
 .doc-card:hover {
-    background: rgba(30, 41, 59, 0.8);
-    border-color: rgba(6, 182, 212, 0.4);
+    background: rgba(30, 41, 59, 0.9);
+    border-color: var(--border-cyan);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 .doc-icon {
     font-size: 1.3rem;
@@ -198,6 +165,23 @@ header[data-testid="stHeader"] {
     color: var(--text-secondary);
 }
 
+/* ── Expanders (Settings) ── */
+[data-testid="stExpander"] {
+    background: rgba(22, 27, 34, 0.5) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--radius-md) !important;
+    overflow: hidden !important;
+}
+[data-testid="stExpander"] summary {
+    color: var(--text-primary) !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 600 !important;
+    font-size: 0.88rem !important;
+}
+[data-testid="stExpander"] summary:hover {
+    color: var(--accent-cyan) !important;
+}
+
 /* ── Hero Welcome Card ── */
 .hero-container {
     display: flex;
@@ -213,8 +197,6 @@ header[data-testid="stHeader"] {
     border-radius: 20px;
     backdrop-filter: blur(16px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    position: relative;
-    overflow: hidden;
 }
 .hero-badge {
     display: inline-flex;
@@ -273,30 +255,33 @@ header[data-testid="stHeader"] {
 }
 .hero-chip:hover {
     background: rgba(6, 182, 212, 0.1);
-    border-color: rgba(6, 182, 212, 0.4);
+    border-color: var(--accent-cyan);
     color: var(--text-primary);
     transform: translateY(-2px);
 }
 
 /* ── Chat Messages ── */
-.chat-message {
-    padding: 1.25rem;
-    margin-bottom: 1rem;
-    border-radius: var(--radius-md);
+.message-row {
     display: flex;
     gap: 1rem;
-    transition: var(--transition);
-}
-.chat-message.user {
-    background: rgba(30, 41, 59, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-}
-.chat-message.assistant {
+    margin-bottom: 1.25rem;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
     background: rgba(17, 24, 39, 0.6);
-    border: 1px solid rgba(6, 182, 212, 0.2);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-subtle);
+    backdrop-filter: blur(12px);
 }
-.chat-avatar {
+.message-row.user {
+    background: rgba(30, 41, 59, 0.55);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+.bubble {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+}
+.avatar {
     width: 32px;
     height: 32px;
     border-radius: 8px;
@@ -306,20 +291,26 @@ header[data-testid="stHeader"] {
     font-size: 1rem;
     flex-shrink: 0;
 }
-.chat-avatar.user {
-    background: #3B82F6;
+.avatar-user {
+    background: var(--accent-blue);
     color: white;
 }
-.chat-avatar.assistant {
-    background: linear-gradient(135deg, #06B6D4, #8B5CF6);
+.avatar-bot {
+    background: var(--gradient-brand);
     color: white;
 }
-.chat-content {
-    flex-grow: 1;
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: var(--text-primary);
+.msg-meta {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* ── Fix Bottom Bar White Background ── */
+[data-testid="stBottom"],
+.stBottom,
+div[data-testid="stBottom"] > div,
+[data-testid="stBottom"] * {
+    background-color: transparent !important;
 }
 
 /* ── Floating Chat Input ── */
@@ -327,7 +318,7 @@ header[data-testid="stHeader"] {
     padding-bottom: 1.5rem !important;
 }
 .stChatInput textarea {
-    background: rgba(17, 24, 39, 0.85) !important;
+    background: rgba(17, 24, 39, 0.9) !important;
     backdrop-filter: blur(16px) !important;
     border: 1px solid rgba(255, 255, 255, 0.12) !important;
     border-radius: var(--radius-lg) !important;
@@ -335,12 +326,12 @@ header[data-testid="stHeader"] {
     font-family: var(--font-body) !important;
     font-size: 0.95rem !important;
     padding: 0.85rem 1.25rem !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
     transition: var(--transition) !important;
 }
 .stChatInput textarea:focus {
     border-color: var(--accent-cyan) !important;
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.25) !important;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.3) !important;
 }
 
 /* ── Buttons ── */
@@ -360,7 +351,7 @@ header[data-testid="stHeader"] {
     transform: translateY(-1px);
 }
 .stButton > button[kind="primary"] {
-    background: linear-gradient(135deg, #06B6D4, #3B82F6) !important;
+    background: var(--gradient-brand) !important;
     color: #FFFFFF !important;
     border: none !important;
 }
@@ -368,34 +359,10 @@ header[data-testid="stHeader"] {
     box-shadow: 0 0 20px rgba(6, 182, 212, 0.4) !important;
 }
 
-/* ── Citations ── */
-.citation {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.25rem;
-    height: 1.25rem;
-    padding: 0 5px;
-    border-radius: 4px;
-    background: rgba(6, 182, 212, 0.15);
-    color: var(--accent-cyan);
-    font-size: 0.72rem;
-    font-weight: 700;
-    font-family: var(--font-mono);
-    vertical-align: super;
-    margin: 0 2px;
-    border: 1px solid rgba(6, 182, 212, 0.3);
-    transition: var(--transition);
-}
-.citation:hover {
-    background: var(--accent-cyan);
-    color: #0A0D14;
-}
-
 </style>
 """
 
-# ── Hero Welcome Screen (Midnight Luxe) ───────────────────────────────────────
+# ── Hero Welcome Screen ───────────────────────────────────────────────────────
 WELCOME_PANEL_HTML = """
 <div class="hero-container">
     <div class="hero-badge">⚡ Neural Document Intelligence</div>
