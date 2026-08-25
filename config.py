@@ -29,8 +29,8 @@ API_PORT: int = int(os.getenv("API_PORT", "8000"))
 API_BASE_URL: str = f"http://{API_HOST}:{API_PORT}"
 
 # ─── LLM Settings ─────────────────────────────────────────────────────────────
-# Provider: "ollama" | "openai" | "gemini"
-LLM_PROVIDER: str = os.getenv("LLM_PROVIDER", "ollama")
+# Provider: "gemini" | "openai" | "ollama"
+LLM_PROVIDER: str = os.getenv("LLM_PROVIDER", "gemini")
 
 # Ollama settings
 OLLAMA_BASE_URL: str = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")

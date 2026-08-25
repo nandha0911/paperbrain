@@ -11,8 +11,8 @@ from utils.file_utils import format_file_size
 
 def render_sidebar_header() -> None:
     st.markdown("""
-        <div class="sidebar-title">\U0001f9e0 PaperBrain</div>
-        <div class="sidebar-subtitle">Powered by Ollama &middot; ChromaDB &middot; BGE</div>
+        <div class="sidebar-title">🧠 PaperBrain</div>
+        <div class="sidebar-subtitle">Powered by Gemini AI &middot; ChromaDB &middot; BGE</div>
         """, unsafe_allow_html=True)
     st.divider()
 
@@ -23,7 +23,7 @@ def render_document_card(doc: dict) -> None:
     name = doc.get("filename", "unknown.pdf")
     st.markdown(f"""
         <div class="doc-card">
-            <div class="doc-icon">\U0001f4c4</div>
+            <div class="doc-icon">📄</div>
             <div class="doc-info">
                 <div class="doc-name" title="{name}">{name}</div>
                 <div class="doc-meta">
@@ -38,20 +38,20 @@ def render_llm_status(available: bool, model_name: str, provider: str) -> None:
     if available:
         st.markdown(f"""
             <div class="doc-card" style="border-color:rgba(34,197,94,0.3)">
-                <div class="doc-icon">\U0001f7e2</div>
+                <div class="doc-icon">🟢</div>
                 <div class="doc-info">
                     <div class="doc-name">{provider.capitalize()} &middot; {model_name}</div>
-                    <div class="doc-meta">LLM connected</div>
+                    <div class="doc-meta">API connected</div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
     else:
         st.markdown(f"""
             <div class="doc-card" style="border-color:rgba(239,68,68,0.3)">
-                <div class="doc-icon">\U0001f534</div>
+                <div class="doc-icon">🔴</div>
                 <div class="doc-info">
                     <div class="doc-name">{provider.capitalize()} &middot; {model_name}</div>
-                    <div class="doc-meta">LLM offline &mdash; start Ollama</div>
+                    <div class="doc-meta">API key not set or invalid</div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
