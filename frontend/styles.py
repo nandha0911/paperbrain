@@ -65,12 +65,32 @@ p, label, li {
     color: var(--text-primary) !important;
 }
 
-/* ── Hide Streamlit default Deploy button, header & footer ── */
+/* ── Clean Transparent Header & Sidebar Toggle Button ── */
+header[data-testid="stHeader"] {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
 .stDeployButton, 
 [data-testid="stDeployButton"],
-footer, 
-header[data-testid="stHeader"] {
+footer,
+#MainMenu {
     display: none !important;
+}
+
+[data-testid="stSidebarCollapseButton"] {
+    display: block !important;
+    visibility: visible !important;
+}
+[data-testid="stSidebarCollapseButton"] button {
+    color: var(--text-primary) !important;
+    background: rgba(22, 27, 34, 0.7) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: 8px !important;
+}
+[data-testid="stSidebarCollapseButton"] button:hover {
+    border-color: var(--accent-cyan) !important;
+    color: var(--accent-cyan) !important;
 }
 
 /* ── Alerts & Warnings ── */

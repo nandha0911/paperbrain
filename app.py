@@ -53,11 +53,6 @@ st.set_page_config(
 # ─── Inject CSS ───────────────────────────────────────────────────────────────
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-# ─── Logo (sidebar top-left) ─────────────────────────────────────────────────
-_logo_path = os.path.join(os.path.dirname(__file__), "assets", "logo.png")
-if os.path.exists(_logo_path):
-    st.logo(_logo_path, link="http://localhost:8501", icon_image=_logo_path)
-
 # ─── Session State Init ───────────────────────────────────────────────────────
 if "messages" not in st.session_state:
     st.session_state.messages = []          # list of {"role","content","sources","confidence","ms"}
