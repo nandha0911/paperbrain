@@ -330,25 +330,34 @@ div[data-testid="stBottom"] > div,
     background-color: transparent !important;
 }
 
-/* ── Floating Chat Input ── */
+/* ── Unified Single Floating Chat Input ── */
 .stChatInput {
     padding-bottom: 1.5rem !important;
 }
-.stChatInput textarea {
-    background: rgba(17, 24, 39, 0.9) !important;
+[data-testid="stChatInput"] > div {
+    background: rgba(17, 24, 39, 0.85) !important;
     backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
     border-radius: var(--radius-lg) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+    transition: var(--transition) !important;
+}
+[data-testid="stChatInput"] > div:focus-within {
+    border-color: var(--accent-cyan) !important;
+    box-shadow: 0 0 24px rgba(6, 182, 212, 0.25) !important;
+}
+[data-testid="stChatInput"] textarea {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
     color: var(--text-primary) !important;
     font-family: var(--font-body) !important;
     font-size: 0.95rem !important;
-    padding: 0.85rem 1.25rem !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
-    transition: var(--transition) !important;
 }
-.stChatInput textarea:focus {
-    border-color: var(--accent-cyan) !important;
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.3) !important;
+[data-testid="stChatInput"] button {
+    background: transparent !important;
+    color: var(--accent-cyan) !important;
+    border: none !important;
 }
 
 /* ── Buttons ── */
