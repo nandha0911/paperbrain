@@ -57,25 +57,21 @@ def render_llm_status(available: bool, model_name: str, provider: str) -> None:
             """, unsafe_allow_html=True)
 
 def render_user_message(content: str, timestamp: str = "") -> None:
-    ts = timestamp or datetime.now().strftime("%H:%M")
     st.markdown(f"""
         <div class="message-row user">
-            <div class="avatar avatar-user">\U0001f464</div>
-            <div style="display:flex;flex-direction:column;align-items:flex-end">
+            <div class="avatar avatar-user">👤</div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;width:100%">
                 <div class="bubble bubble-user">{content}</div>
-                <div class="msg-meta user">{ts}</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
 
 def render_assistant_message(content: str, sources: list = None, confidence: float = 0.0, processing_ms: int = 0, timestamp: str = "") -> None:
-    ts = timestamp or datetime.now().strftime("%H:%M")
     st.markdown(f"""
         <div class="message-row">
             <div class="avatar avatar-bot">🧠</div>
             <div style="display:flex;flex-direction:column;width:100%">
                 <div class="bubble">{content}</div>
-                <div class="msg-meta">{ts}</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
