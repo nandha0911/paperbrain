@@ -1,106 +1,60 @@
 """
 frontend/styles.py
 ==================
-Custom CSS for the PaperBrain Streamlit UI.
-Academic Journal Aesthetic.
+Midnight Luxe & Glassmorphism design system for PaperBrain AI.
 """
 
 CUSTOM_CSS = """
 <style>
 /* ── Google Fonts ── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* ── CSS Variables (Academic Journal) ── */
+/* ── Design System Variables ── */
 :root {
-    --bg-primary:    #FDFDFB; /* Off-white paper */
-    --bg-secondary:  #F4F4F0; /* Slightly darker paper for sidebar */
-    --bg-card:       #FFFFFF;
-    --bg-card-hover: #F8F8F6;
-    --border:        #E2E1D9; /* Soft grey/sepia border */
-    --border-dark:   #D5D4CB;
-    --accent:        #8B7355; /* Muted Sepia/Gold */
-    --accent-light:  #D2C9BB;
-    --accent-dim:    rgba(139, 115, 85, 0.1);
-    --success:       #556B2F; /* Dark Olive Green */
-    --warning:       #D2B48C; /* Tan */
-    --danger:        #8B0000; /* Dark Red */
-    --text-primary:  #1A1A1A; /* Charcoal Black */
-    --text-secondary:#4A4A4A; /* Soft grey */
-    --text-muted:    #7A7A7A;
-    --text-sidebar:  #2B2B2B; /* Dark text for light sidebar */
+    --bg-canvas:       #0A0D14;
+    --bg-surface:      rgba(17, 24, 39, 0.75);
+    --bg-card:         rgba(22, 27, 34, 0.65);
+    --bg-card-hover:   rgba(30, 41, 59, 0.85);
+    --border-subtle:   rgba(255, 255, 255, 0.08);
+    --border-glow:     rgba(6, 182, 212, 0.4);
     
-    --user-bubble:   #FFFFFF;
-    --bot-bubble:    #F4F4F0;
+    --accent-cyan:     #06B6D4;
+    --accent-blue:     #3B82F6;
+    --accent-emerald:  #10B981;
+    --gradient-brand:  linear-gradient(135deg, #06B6D4 0%, #3B82F6 50%, #8B5CF6 100%);
+    --gradient-glow:   radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.15), transparent 70%);
+
+    --text-primary:    #F8FAFC;
+    --text-secondary:  #94A3B8;
+    --text-muted:      #64748B;
     
-    --font-ui:       'Inter', sans-serif;
-    --font-reading:  'Lora', serif;
-    --font-mono:     'JetBrains Mono', monospace;
+    --font-heading:    'Plus Jakarta Sans', sans-serif;
+    --font-body:       'Inter', sans-serif;
+    --font-mono:       'JetBrains Mono', monospace;
     
-    --radius-sm:     4px; /* Less rounded, more print-like */
-    --radius-md:     6px;
-    --radius-lg:     8px;
-    --transition:    0.25s ease-out;
+    --radius-sm:       8px;
+    --radius-md:       12px;
+    --radius-lg:       16px;
+    --radius-pill:     9999px;
+    --transition:      all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Base ── */
+/* ── Global Canvas ── */
 html, body, [class*="css"] {
-    font-family: var(--font-reading) !important;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-reading) !important;
-    font-weight: 600 !important;
+    font-family: var(--font-body) !important;
+    background-color: var(--bg-canvas) !important;
     color: var(--text-primary) !important;
-    letter-spacing: -0.01em;
 }
 
-/* ── Main App Background ── */
 .stApp {
-    background-color: var(--bg-primary) !important;
+    background: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(6, 182, 212, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(139, 92, 246, 0.08), transparent),
+        #0A0D14 !important;
     color: var(--text-primary) !important;
 }
 
-/* ── Hide Streamlit default Deploy button & footer ── */
-.stDeployButton, 
-[data-testid="stDeployButton"],
-footer {
-    display: none !important;
-}
-header[data-testid="stHeader"] {
-    background-color: transparent !important;
-}
-
-/* ── Sidebar ── */
-[data-testid="stSidebar"] {
-    background: var(--bg-secondary) !important;
-    border-right: 1px solid var(--border) !important;
-    box-shadow: none !important;
-}
-[data-testid="stSidebar"] .block-container {
-    padding: 2rem 1.5rem !important;
-}
-
-/* Aggressively force text colors in sidebar to dark */
-[data-testid="stSidebar"],
-[data-testid="stSidebar"] * {
-    color: var(--text-sidebar) !important;
-    font-family: var(--font-ui) !important; /* Sidebar uses UI font */
-}
-[data-testid="stSidebar"] .stMarkdown p,
-[data-testid="stSidebar"] .stMarkdown h1,
-[data-testid="stSidebar"] .stMarkdown h2,
-[data-testid="stSidebar"] .stMarkdown h3,
-[data-testid="stSidebar"] .stMarkdown h4,
-[data-testid="stSidebar"] .stText,
-[data-testid="stSidebar"] label {
-    color: var(--text-sidebar) !important;
-}
-[data-testid="stSidebar"] hr {
-    border-top: 1px solid var(--border-dark) !important;
-    margin: 1.5rem 0 !important;
-}
-
-/* Protect Material Symbols icons from font overrides */
+/* ── Protect Material Icons ── */
 [data-testid="stIconMaterial"], 
 .material-symbols-rounded,
 [class*="material-symbols"],
@@ -108,156 +62,310 @@ header[data-testid="stHeader"] {
     font-family: 'Material Symbols Rounded', sans-serif !important;
 }
 
-/* ── Sidebar title ── */
-.sidebar-title {
-    font-family: var(--font-reading) !important;
-    font-size: 1.4rem;
-    font-weight: 700;
+/* ── Hide Streamlit default Deploy button & footer ── */
+.stDeployButton, 
+[data-testid="stDeployButton"],
+footer, 
+header[data-testid="stHeader"] {
+    display: none !important;
+}
+
+/* ── Sidebar ── */
+[data-testid="stSidebar"] {
+    background: rgba(13, 17, 23, 0.85) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-right: 1px solid var(--border-subtle) !important;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4) !important;
+}
+[data-testid="stSidebar"] .block-container {
+    padding: 2rem 1.25rem !important;
+}
+
+/* Force dark sidebar text */
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3,
+[data-testid="stSidebar"] h4,
+[data-testid="stSidebar"] span,
+[data-testid="stSidebar"] label {
     color: var(--text-primary) !important;
-    margin-bottom: 0.25rem;
+    font-family: var(--font-heading) !important;
+}
+[data-testid="stSidebar"] hr {
+    border-top: 1px solid var(--border-subtle) !important;
+    margin: 1.25rem 0 !important;
+}
+
+/* ── Sidebar Title ── */
+.sidebar-title {
+    font-family: var(--font-heading) !important;
+    font-size: 1.35rem;
+    font-weight: 800;
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     display: flex;
     align-items: center;
     gap: 8px;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.2rem;
 }
 .sidebar-subtitle {
-    font-family: var(--font-ui) !important;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-family: var(--font-body) !important;
+    font-size: 0.72rem;
+    font-weight: 500;
     color: var(--text-muted) !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     margin-bottom: 1.5rem;
 }
 
-/* ── File uploader ── */
+/* ── Modern File Uploader Dropzone ── */
 [data-testid="stFileUploader"] {
     background: transparent !important;
 }
 [data-testid="stFileUploadDropzone"] {
-    background: var(--bg-card) !important; 
-    border: 1px dashed var(--border-dark) !important;
-    border-radius: var(--radius-sm) !important;
-    padding: 1rem !important;
+    background: rgba(22, 27, 34, 0.5) !important;
+    border: 1px dashed rgba(6, 182, 212, 0.3) !important;
+    border-radius: var(--radius-md) !important;
+    padding: 1.25rem 1rem !important;
     transition: var(--transition) !important;
 }
 [data-testid="stFileUploadDropzone"]:hover {
-    border-color: var(--accent) !important;
-    background: var(--bg-card-hover) !important;
+    border-color: var(--accent-cyan) !important;
+    background: rgba(30, 41, 59, 0.7) !important;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.15) !important;
 }
 [data-testid="stFileUploadDropzone"] button {
-    border-radius: var(--radius-sm) !important;
-    font-family: var(--font-ui) !important;
-    font-size: 0.82rem !important;
-    border: 1px solid var(--border-dark) !important;
-    background: var(--bg-primary) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
     color: var(--text-primary) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--radius-sm) !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    transition: var(--transition) !important;
 }
 [data-testid="stFileUploadDropzone"] button:hover {
-    border-color: var(--accent) !important;
-    color: var(--accent) !important;
+    background: var(--accent-cyan) !important;
+    color: #0A0D14 !important;
+    border-color: var(--accent-cyan) !important;
 }
 
-/* ── Document card ── */
+/* ── Document Cards ── */
 .doc-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    padding: 1rem;
-    border-radius: var(--radius-sm);
-    margin-bottom: 0.75rem;
+    background: rgba(22, 27, 34, 0.6);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.6rem;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
     transition: var(--transition);
+    backdrop-filter: blur(8px);
 }
 .doc-card:hover {
-    background: var(--bg-card-hover);
-    border-color: var(--accent-light);
+    background: rgba(30, 41, 59, 0.8);
+    border-color: rgba(6, 182, 212, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 .doc-icon {
-    font-size: 1.5rem;
-    margin-top: 2px;
+    font-size: 1.3rem;
+    flex-shrink: 0;
 }
 .doc-info {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
+    overflow: hidden;
 }
 .doc-name {
-    font-family: var(--font-ui);
+    font-family: var(--font-heading);
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-primary);
-    word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .doc-meta {
-    font-family: var(--font-ui);
-    font-size: 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
     color: var(--text-secondary);
+}
+
+/* ── Hero Welcome Card ── */
+.hero-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    max-width: 680px;
+    margin: 1.5rem auto;
+    background: rgba(17, 24, 39, 0.4);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: rgba(6, 182, 212, 0.1);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+}
+.hero-title span {
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-desc {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+.hero-chips-grid {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.hero-chip {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-pill);
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.hero-chip:hover {
+    background: rgba(6, 182, 212, 0.1);
+    border-color: rgba(6, 182, 212, 0.4);
+    color: var(--text-primary);
+    transform: translateY(-2px);
 }
 
 /* ── Chat Messages ── */
 .chat-message {
-    padding: 1.5rem 0;
-    margin-bottom: 0;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    border-radius: var(--radius-md);
     display: flex;
-    gap: 1.25rem;
-    border-bottom: 1px solid var(--border);
-}
-.chat-message:last-child {
-    border-bottom: none;
+    gap: 1rem;
+    transition: var(--transition);
 }
 .chat-message.user {
-    background-color: transparent;
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 .chat-message.assistant {
-    background-color: transparent;
+    background: rgba(17, 24, 39, 0.6);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 .chat-avatar {
     width: 32px;
     height: 32px;
-    border-radius: 2px; /* Square blocky avatar */
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1rem;
     flex-shrink: 0;
-    font-family: var(--font-ui);
 }
 .chat-avatar.user {
-    background: var(--text-primary);
+    background: #3B82F6;
     color: white;
 }
 .chat-avatar.assistant {
-    background: var(--accent);
+    background: linear-gradient(135deg, #06B6D4, #8B5CF6);
     color: white;
 }
 .chat-content {
     flex-grow: 1;
-    font-family: var(--font-reading);
-    font-size: 1.05rem;
-    line-height: 1.8;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.7;
     color: var(--text-primary);
 }
-.chat-content code {
-    font-family: var(--font-mono) !important;
-    font-size: 0.85em;
-    background: var(--bg-secondary);
-    padding: 0.2em 0.4em;
-    border-radius: 2px;
-    border: 1px solid var(--border);
-    color: var(--text-primary);
+
+/* ── Floating Chat Input ── */
+.stChatInput {
+    padding-bottom: 1.5rem !important;
 }
-.chat-content pre {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    padding: 1rem;
-    border-radius: var(--radius-sm);
-    overflow-x: auto;
+.stChatInput textarea {
+    background: rgba(17, 24, 39, 0.85) !important;
+    backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: var(--radius-lg) !important;
+    color: var(--text-primary) !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.95rem !important;
+    padding: 0.85rem 1.25rem !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+    transition: var(--transition) !important;
 }
-.chat-content pre code {
-    background: none;
-    padding: 0;
-    border: none;
+.stChatInput textarea:focus {
+    border-color: var(--accent-cyan) !important;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.25) !important;
+}
+
+/* ── Buttons ── */
+.stButton > button {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--radius-sm) !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 600 !important;
+    transition: var(--transition) !important;
+}
+.stButton > button:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: var(--accent-cyan) !important;
+    color: var(--accent-cyan) !important;
+    transform: translateY(-1px);
+}
+.stButton > button[kind="primary"] {
+    background: linear-gradient(135deg, #06B6D4, #3B82F6) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+}
+.stButton > button[kind="primary"]:hover {
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.4) !important;
 }
 
 /* ── Citations ── */
@@ -267,244 +375,50 @@ header[data-testid="stHeader"] {
     justify-content: center;
     min-width: 1.25rem;
     height: 1.25rem;
-    padding: 0 4px;
-    border-radius: 2px;
-    background: var(--bg-secondary);
-    color: var(--accent);
-    font-size: 0.7rem;
-    font-weight: 600;
-    font-family: var(--font-ui);
+    padding: 0 5px;
+    border-radius: 4px;
+    background: rgba(6, 182, 212, 0.15);
+    color: var(--accent-cyan);
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
     vertical-align: super;
-    cursor: pointer;
     margin: 0 2px;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(6, 182, 212, 0.3);
     transition: var(--transition);
 }
 .citation:hover {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
+    background: var(--accent-cyan);
+    color: #0A0D14;
 }
 
-/* ── Source Cards ── */
-.source-panel {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
-}
-.source-panel-title {
-    font-family: var(--font-ui);
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-secondary);
-    margin-bottom: 1rem;
-}
-.source-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    padding: 1rem;
-    border-radius: var(--radius-sm);
-    margin-bottom: 0.75rem;
-}
-.source-meta {
-    font-family: var(--font-ui);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.75rem;
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 0.5rem;
-}
-.source-text {
-    font-family: var(--font-reading);
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: var(--text-secondary);
-}
-
-/* ── Metric badges ── */
-.metric-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 2px 6px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    font-size: 0.7rem;
-    font-weight: 500;
-    font-family: var(--font-mono);
-    color: var(--text-secondary);
-}
-
-/* ── Buttons (Streamlit Overrides) ── */
-.stButton > button {
-    border-radius: var(--radius-sm) !important;
-    font-family: var(--font-ui) !important;
-    font-weight: 500 !important;
-    border: 1px solid var(--border-dark) !important;
-    color: var(--text-primary) !important;
-    background: var(--bg-card) !important;
-    transition: var(--transition) !important;
-}
-.stButton > button:hover {
-    border-color: var(--accent) !important;
-    color: var(--accent) !important;
-    background: var(--bg-card-hover) !important;
-}
-.stButton > button[kind="primary"] {
-    background: var(--text-primary) !important;
-    color: white !important;
-    border-color: var(--text-primary) !important;
-}
-.stButton > button[kind="primary"]:hover {
-    background: var(--accent) !important;
-    border-color: var(--accent) !important;
-}
-
-/* ── Input Box (Chat Input) ── */
-.stChatInput {
-    padding-bottom: 2rem !important;
-}
-.stChatInput textarea {
-    border-radius: var(--radius-sm) !important;
-    border: 1px solid var(--border-dark) !important;
-    background: var(--bg-card) !important;
-    color: var(--text-primary) !important;
-    font-family: var(--font-reading) !important;
-    font-size: 1.05rem !important;
-}
-.stChatInput textarea:focus {
-    border-color: var(--accent) !important;
-    box-shadow: 0 0 0 1px var(--accent) !important;
-}
 </style>
 """
 
-
-# ── Welcome Panel (Academic Journal style) ────────────────────────────────────
+# ── Hero Welcome Screen (Midnight Luxe) ───────────────────────────────────────
 WELCOME_PANEL_HTML = """
-<div style="
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 2rem;
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-">
-    <div style="
-        font-size: 3rem;
-        margin-bottom: 1.5rem;
-        opacity: 0.8;
-    ">📖</div>
-    <h2 style="
-        font-family: 'Lora', serif;
-        font-size: 1.8rem;
-        font-weight: 600;
-        color: #1A1A1A;
-        margin-bottom: 0.75rem;
-        letter-spacing: -0.02em;
-    ">Ask <em>PaperBrain</em></h2>
-    <p style="
-        font-family: 'Lora', serif;
-        font-size: 1rem;
-        color: #4A4A4A;
-        line-height: 1.8;
-        margin-bottom: 0.25rem;
-    ">Upload your PDFs and ask any question.</p>
-    <p style="
-        font-family: 'Inter', sans-serif;
-        font-size: 0.85rem;
-        color: #7A7A7A;
-        margin-bottom: 2rem;
-    ">Answers come <strong>only from your documents</strong> &mdash; zero hallucinations.</p>
-    <div style="
-        display: flex;
-        gap: 1.5rem;
-        flex-wrap: wrap;
-        justify-content: center;
-    ">
-        <div style="
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid #E2E1D9;
-            border-radius: 4px;
-            color: #4A4A4A;
-            background: #F4F4F0;
-        ">🔍 Semantic Search</div>
-        <div style="
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid #E2E1D9;
-            border-radius: 4px;
-            color: #4A4A4A;
-            background: #F4F4F0;
-        ">📑 Exact Citations</div>
-        <div style="
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid #E2E1D9;
-            border-radius: 4px;
-            color: #4A4A4A;
-            background: #F4F4F0;
-        ">🔒 100% Offline</div>
+<div class="hero-container">
+    <div class="hero-badge">⚡ Neural Document Intelligence</div>
+    <div class="hero-title">Ask <span>PaperBrain</span></div>
+    <div class="hero-desc">
+        Upload your PDF documents and ask anything. Grounded strictly in your data with exact source citations and zero hallucinations.
+    </div>
+    <div class="hero-chips-grid">
+        <div class="hero-chip">🔍 Hybrid Vector Search</div>
+        <div class="hero-chip">📑 Exact Page Citations</div>
+        <div class="hero-chip">⚡ Powered by Gemini Flash</div>
     </div>
 </div>
 """
 
-
 # ── Typing Indicator ──────────────────────────────────────────────────────────
 TYPING_INDICATOR_HTML = """
-<div style="
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 0;
-">
-    <div style="
-        width: 32px;
-        height: 32px;
-        border-radius: 2px;
-        background: #8B7355;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-    ">🧠</div>
-    <div style="
-        display: flex;
-        gap: 4px;
-        align-items: center;
-    ">
-        <div style="
-            width: 6px; height: 6px;
-            background: #8B7355;
-            border-radius: 50%;
-            animation: typingDot 1.4s ease-in-out infinite;
-        "></div>
-        <div style="
-            width: 6px; height: 6px;
-            background: #8B7355;
-            border-radius: 50%;
-            animation: typingDot 1.4s ease-in-out 0.2s infinite;
-        "></div>
-        <div style="
-            width: 6px; height: 6px;
-            background: #8B7355;
-            border-radius: 50%;
-            animation: typingDot 1.4s ease-in-out 0.4s infinite;
-        "></div>
+<div style="display: flex; align-items: center; gap: 0.75rem; padding: 1rem 0;">
+    <div style="width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #06B6D4, #3B82F6); color: white; display: flex; align-items: center; justify-content: center; font-size: 1rem;">🧠</div>
+    <div style="display: flex; gap: 4px; align-items: center;">
+        <div style="width: 6px; height: 6px; background: #06B6D4; border-radius: 50%; animation: typingDot 1.4s ease-in-out infinite;"></div>
+        <div style="width: 6px; height: 6px; background: #06B6D4; border-radius: 50%; animation: typingDot 1.4s ease-in-out 0.2s infinite;"></div>
+        <div style="width: 6px; height: 6px; background: #06B6D4; border-radius: 50%; animation: typingDot 1.4s ease-in-out 0.4s infinite;"></div>
     </div>
 </div>
 <style>

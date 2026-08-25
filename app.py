@@ -257,6 +257,21 @@ chat_area = st.container()
 with chat_area:
     if not st.session_state.messages:
         render_welcome_screen()
+        if st.session_state.documents:
+            st.markdown("<div style='text-align:center;color:var(--text-muted);font-size:0.8rem;margin:1rem 0 0.5rem 0;'>✨ Suggested Queries</div>", unsafe_allow_html=True)
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                if st.button("📋 Summarize key points", use_container_width=True):
+                    st.session_state.pending_prompt = "Summarize the key points and core findings in these documents."
+                    st.rerun()
+            with col2:
+                if st.button("📊 Extract data & facts", use_container_width=True):
+                    st.session_state.pending_prompt = "Extract the most important data points, facts, and figures from the documents."
+                    st.rerun()
+            with col3:
+                if st.button("🎯 Core conclusions", use_container_width=True):
+                    st.session_state.pending_prompt = "What are the primary conclusions and recommendations in the documents?"
+                    st.rerun()
     else:
         for msg in st.session_state.messages:
             ts = msg.get("timestamp", "")
@@ -272,10 +287,14 @@ with chat_area:
                 )
 
 # ── Chat input ─────────────────────────────────────────────────────────────────
-question = st.chat_input(
-    "Ask a question about your documents…",
-    disabled=not st.session_state.api_reachable,
-)
+if "pending_prompt" in st.session_state and st.session_state.pending_prompt:
+    question = st.session_state.pending_prompt
+    st.session_state.pending_prompt = None
+else:
+    question = st.chat_input(
+        "Ask a question about your documents…",
+        disabled=not st.session_state.api_reachable,
+    )
 
 if question:
     if not st.session_state.documents:
