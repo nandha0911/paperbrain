@@ -207,24 +207,8 @@ with st.sidebar:
             value=st.session_state.top_k,
             help="Number of document chunks retrieved per query.",
         )
-        custom_key = st.text_input(
-            "Gemini API Key",
-            value=config.GEMINI_API_KEY,
-            type="password",
-            help="Enter your Google Gemini API Key from aistudio.google.com",
-        )
-        if custom_key and custom_key != config.GEMINI_API_KEY:
-            config.GEMINI_API_KEY = custom_key
-            try:
-                import google.generativeai as genai
-                genai.configure(api_key=custom_key)
-            except Exception:
-                pass
-            refresh_state()
-            st.rerun()
-
         st.markdown(
-            f"<div style='font-size:0.72rem;color:var(--text-muted)'>"
+            f"<div style='font-size:0.72rem;color:var(--text-muted);margin-top:0.5rem;'>"
             f"Session: <code>{st.session_state.session_id[-12:]}</code>"
             f"</div>",
             unsafe_allow_html=True,
