@@ -24,6 +24,7 @@ from datetime import datetime
 import streamlit as st
 
 import config
+from utils.file_utils import sanitize_filename
 from frontend.components import (
     render_app_header,
     render_assistant_message,
@@ -118,36 +119,29 @@ with st.sidebar:
     )
 
     if uploaded_files:
-        newly_processed = False
+        current_filenames = {d.get("filename") for d in st.session_state.documents}
         for uf in uploaded_files:
-            # Check if already in current session documents
-            already_in_list = any(
-                d.get("filename") == uf.name or uf.name in d.get("filename", "")
-                for d in st.session_state.documents
-            )
-            if already_in_list:
+            file_bytes = uf.getvalue()
+            if not file_bytes:
                 continue
 
-            with st.spinner(f"Processing {uf.name}…"):
-                file_bytes = uf.getvalue()
+            safe_name = sanitize_filename(uf.name)
+            if safe_name in current_filenames:
+                continue
+
+            with st.spinner(f"Indexing {uf.name}…"):
                 result = api_upload(file_bytes, uf.name)
 
-            if result is None or "error" in result:
-                st.error(f"❌ Upload failed: {result.get('error', 'Unknown error') if result else 'No response'}")
-            elif result.get("already_exists"):
-                render_upload_duplicate(result.get("filename", uf.name))
-                newly_processed = True
-            else:
-                render_upload_success(
-                    result.get("filename", uf.name),
-                    result.get("page_count", 0),
-                    result.get("chunk_count", 0),
-                )
-                newly_processed = True
-
-        if newly_processed:
-            refresh_state()
-            st.rerun()
+            if result and "error" in result:
+                st.error(f"❌ Upload failed: {result['error']}")
+            elif result and result.get("already_exists"):
+                st.info(f"ℹ️ {result.get('filename', uf.name)} is already indexed.")
+                refresh_state()
+                st.rerun()
+            elif result:
+                st.success(f"✅ Indexed {result.get('filename', uf.name)}")
+                refresh_state()
+                st.rerun()
 
     st.markdown("---")
 
