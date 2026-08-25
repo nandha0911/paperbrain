@@ -64,9 +64,6 @@ class VectorStoreService:
         )
         self._rebuild_doc_registry()
 
-        if config.RERANK_ENABLED:
-            self._load_reranker()
-
     def _load_reranker(self) -> None:
         """Lazily load the cross-encoder reranker model."""
         try:
@@ -374,9 +371,14 @@ class VectorStoreService:
         Returns:
             Reranked and sliced list.
         """
+        if self._reranker is None:
+            self._load_reranker()
+        if not self._reranker:
+            return candidates[:top_k]
+
         try:
             pairs = [(query, c["text"]) for c in candidates]
-            scores = self._reranker.predict(pairs)  # type: ignore[union-attr]
+            scores = self._reranker.predict(pairs)
             for i, candidate in enumerate(candidates):
                 candidate["score"] = float(
                     1 / (1 + np.exp(-scores[i]))  # sigmoid normalise
