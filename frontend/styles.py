@@ -100,6 +100,14 @@ header[data-testid="stHeader"] {
     margin: 1.5rem 0 !important;
 }
 
+/* Protect Material Symbols icons from font overrides */
+[data-testid="stIconMaterial"], 
+.material-symbols-rounded,
+[class*="material-symbols"],
+[data-testid="stSidebarCollapseButton"] * {
+    font-family: 'Material Symbols Rounded', sans-serif !important;
+}
+
 /* ── Sidebar title ── */
 .sidebar-title {
     font-family: var(--font-reading) !important;
@@ -118,35 +126,31 @@ header[data-testid="stHeader"] {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--text-muted) !important;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 /* ── File uploader ── */
-[data-testid="stFileUploader"] * {
-    color: var(--text-sidebar) !important;
-    font-family: var(--font-ui) !important;
-}
 [data-testid="stFileUploader"] {
     background: transparent !important;
 }
 [data-testid="stFileUploadDropzone"] {
-    background: var(--bg-primary) !important; 
-    border: 1px dashed var(--accent) !important;
+    background: var(--bg-card) !important; 
+    border: 1px dashed var(--border-dark) !important;
     border-radius: var(--radius-sm) !important;
+    padding: 1rem !important;
     transition: var(--transition) !important;
 }
 [data-testid="stFileUploadDropzone"]:hover {
+    border-color: var(--accent) !important;
     background: var(--bg-card-hover) !important;
 }
 [data-testid="stFileUploadDropzone"] button {
-    background: var(--bg-secondary) !important;
-    color: var(--text-primary) !important;
-    border: 1px solid var(--border-dark) !important;
-    font-family: var(--font-ui) !important;
-    text-transform: uppercase;
-    font-size: 0.75rem !important;
-    letter-spacing: 0.05em;
     border-radius: var(--radius-sm) !important;
+    font-family: var(--font-ui) !important;
+    font-size: 0.82rem !important;
+    border: 1px solid var(--border-dark) !important;
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
 }
 [data-testid="stFileUploadDropzone"] button:hover {
     border-color: var(--accent) !important;

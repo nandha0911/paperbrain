@@ -109,33 +109,11 @@ def refresh_state() -> None:
 
 # ─── Sidebar ──────────────────────────────────────────────────────────────────
 
+if not st.session_state.api_reachable:
+    refresh_state()
+
 with st.sidebar:
     render_sidebar_header()
-
-    # ── LLM Status ────────────────────────────────────────────────────────────
-    if st.button("🔄 Refresh Status", use_container_width=True):
-        refresh_state()
-        st.rerun()
-
-    if not st.session_state.api_reachable:
-        # Try once on first load
-        refresh_state()
-
-    render_llm_status(
-        available=st.session_state.llm_available,
-        model_name=st.session_state.llm_model,
-        provider=config.LLM_PROVIDER,
-    )
-
-    if not st.session_state.api_reachable:
-        st.error(
-            "⚠️ Cannot reach the API server.\n\n"
-            "Make sure the FastAPI backend is running:\n"
-            "```\npython api.py\n```",
-            icon="🔌",
-        )
-
-    st.markdown("---")
 
     # ── Upload PDF ────────────────────────────────────────────────────────────
     st.markdown("#### 📤 Upload PDFs")
