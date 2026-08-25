@@ -8,26 +8,20 @@ STRICT enforcement: chatbot ONLY answers from uploaded PDFs.
 from string import Template
 
 
-# ─── Main RAG System Prompt (Very Strict) ────────────────────────────────────
-RAG_SYSTEM_PROMPT = """You are a STRICT document-only assistant. You have NO general knowledge and NO ability to answer from memory.
+# ─── Main RAG System Prompt ───────────────────────────────────────────────────
+RAG_SYSTEM_PROMPT = """You are PaperBrain, an intelligent and helpful document assistant.
+Your goal is to answer the user's questions clearly, accurately, and thoroughly using the provided DOCUMENT CONTEXT.
 
-YOUR ONLY SOURCE OF TRUTH: The context blocks provided below. Nothing else.
-
-ABSOLUTE RULES — never break these:
-1. ONLY use information explicitly written in the provided context blocks.
-2. If the exact answer is NOT found in the context, you MUST reply EXACTLY:
+Guidelines:
+1. Ground your answers in the provided context passages. Synthesize the information into a clear, easy-to-read response (using bullet points, formatting, and clean explanations).
+2. If the user asks for an explanation, overview, summary, or specific details, use all relevant information present in the context to give a complete and helpful answer.
+3. If the provided context truly contains NO relevant information to answer the question, politely reply:
    "I don't have information about that in the uploaded documents."
-3. NEVER use your training knowledge, general facts, or assumptions.
-4. NEVER say things like "generally", "typically", "in most cases" — these imply outside knowledge.
-5. NEVER guess or infer beyond what the context explicitly states.
-6. If context is partially relevant, share only what is stated and say the rest is not in the documents.
-7. Do NOT confirm or deny facts not in the context — just say it's not in the documents.
-
-VIOLATION CHECK: Before answering, ask yourself — "Is this answer word-for-word supported by the context?" If NO → reply with the standard not-found message."""
+4. Do not make up facts that are not supported by the context."""
 
 
 # ─── Main RAG User Prompt ─────────────────────────────────────────────────────
-RAG_USER_PROMPT_TEMPLATE = Template("""=== DOCUMENT CONTEXT (YOUR ONLY SOURCE) ===
+RAG_USER_PROMPT_TEMPLATE = Template("""=== DOCUMENT CONTEXT ===
 $context
 === END OF DOCUMENT CONTEXT ===
 
@@ -35,15 +29,8 @@ $context
 $history
 === END OF CONVERSATION HISTORY ===
 
-=== QUESTION ===
+=== USER QUESTION ===
 $question
-
-=== YOUR TASK ===
-1. Search ONLY in the DOCUMENT CONTEXT above for the answer.
-2. If the answer exists in the context → answer it clearly and cite the source.
-3. If the answer does NOT exist in the context → reply EXACTLY with this phrase:
-   "I don't have information about that in the uploaded documents."
-4. Do NOT use any knowledge from your training. Only the context above.
 
 === ANSWER ===
 """)
@@ -76,58 +63,16 @@ NO_DOCUMENTS_RESPONSE = (
     "No documents have been uploaded yet. Please upload one or more PDF files to get started."
 )
 
-# Keywords that indicate the LLM answered from its own knowledge (hallucination signals)
-HALLUCINATION_SIGNALS = [
-    "generally speaking",
-    "in general",
-    "typically",
-    "usually",
-    "it is commonly known",
-    "as we know",
-    "as is well known",
-    "from my knowledge",
-    "based on my training",
-    "i believe",
-    "i think",
-    "i know that",
-    "it is a fact",
-    "historically",
-    "in most cases",
-    "broadly speaking",
-    "as a general rule",
-]
-
 
 def validate_answer(answer: str, context: str) -> str:
     """
-    Post-process LLM answer to catch hallucinations.
-
-    If the answer contains hallucination signals AND the question topic
-    is not in the context, replace with the standard not-found response.
-
-    Args:
-        answer: Raw LLM output.
-        context: The context string used in the prompt.
-
-    Returns:
-        Validated answer string.
+    Post-process LLM answer to ensure validity.
     """
     if not answer or not answer.strip():
         return NO_CONTEXT_RESPONSE
 
-    answer_lower = answer.lower().strip()
-
-    # If LLM already said the not-found phrase, keep it clean
-    if "i don't have information" in answer_lower or "i do not have information" in answer_lower:
-        return NO_CONTEXT_RESPONSE
-
-    # Check for hallucination signal phrases
-    for signal in HALLUCINATION_SIGNALS:
-        if signal in answer_lower:
-            return NO_CONTEXT_RESPONSE
-
-    # If context was empty/not found, force the standard response
-    if context.strip() in ("No relevant context found.", ""):
+    # If context was empty/not found, return standard response
+    if not context or context.strip() in ("No relevant context found.", ""):
         return NO_CONTEXT_RESPONSE
 
     return answer.strip()

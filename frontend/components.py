@@ -72,18 +72,28 @@ def render_assistant_message(content: str, sources: list = None, confidence: flo
     ts = timestamp or datetime.now().strftime("%H:%M")
     st.markdown(f"""
         <div class="message-row">
-            <div class="avatar avatar-bot">\U0001f916</div>
-            <div style="display:flex;flex-direction:column">
-                <div class="bubble bubble-bot">{content}</div>
+            <div class="avatar avatar-bot">🧠</div>
+            <div style="display:flex;flex-direction:column;width:100%">
+                <div class="bubble">{content}</div>
                 <div class="msg-meta">{ts}</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
     if sources:
-        with st.expander("Sources"):
+        with st.expander("📚 Sources & Citations"):
             for s in sources:
-                st.markdown(f"**{s.get('filename','?')}** - Page {s.get('page_num','?')}")
-                st.markdown(f"> _{s.get('content','')}..._")
+                if isinstance(s, dict):
+                    fname = s.get('filename', 'Unknown Document')
+                    page = s.get('page_number', s.get('page_num', '?'))
+                    snippet = s.get('snippet', s.get('content', s.get('text', ''))).strip()
+                else:
+                    fname = getattr(s, 'filename', 'Unknown Document')
+                    page = getattr(s, 'page_number', '?')
+                    snippet = getattr(s, 'snippet', '').strip()
+                st.markdown(f"**📄 {fname}** &middot; Page `{page}`")
+                if snippet:
+                    st.markdown(f"> _{snippet}_")
+                st.markdown("---")
 
 def render_upload_success(filename: str, pages: int, chunks: int) -> None:
     st.success(f"Successfully processed {filename} ({pages} pages, {chunks} chunks).", icon="\U0001f4c4")

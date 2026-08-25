@@ -67,7 +67,7 @@ CHUNK_MIN_LENGTH: int = int(os.getenv("CHUNK_MIN_LENGTH", "50"))  # discard tiny
 
 # ─── Retrieval Settings ───────────────────────────────────────────────────────
 TOP_K: int = int(os.getenv("TOP_K", "5"))
-CONFIDENCE_THRESHOLD: float = float(os.getenv("CONFIDENCE_THRESHOLD", "0.40"))
+CONFIDENCE_THRESHOLD: float = float(os.getenv("CONFIDENCE_THRESHOLD", "0.15"))
 MMR_LAMBDA: float = float(os.getenv("MMR_LAMBDA", "0.5"))  # diversity weight
 RERANK_ENABLED: bool = os.getenv("RERANK_ENABLED", "true").lower() == "true"
 RERANK_MODEL: str = os.getenv(
