@@ -11,6 +11,13 @@ For remote/ngrok sharing, set API_BASE_URL in .env to the ngrok API tunnel URL.
 
 from __future__ import annotations
 
+import sys
+try:
+    __import__("pysqlite3")
+    sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+except ImportError:
+    pass
+
 import os
 import time
 from datetime import datetime
