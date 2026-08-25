@@ -36,13 +36,20 @@ CUSTOM_CSS = """
     --transition:      all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Canvas & Background ── */
+/* ── Global Canvas & Root Background ── */
+html, body, #root, [data-testid="stAppViewContainer"], [data-testid="stMainBlockContainer"], [data-testid="stBottomBlockContainer"] {
+    background-color: #0A0D14 !important;
+    background: #0A0D14 !important;
+    color: var(--text-primary) !important;
+}
+
 .stApp {
     background: 
         radial-gradient(ellipse 80% 50% at 50% -20%, rgba(6, 182, 212, 0.12), transparent),
         radial-gradient(ellipse 60% 40% at 100% 50%, rgba(139, 92, 246, 0.08), transparent),
         #0A0D14 !important;
     color: var(--text-primary) !important;
+    min-height: 100vh !important;
 }
 
 /* ── Typography (Targeted to prevent breaking icons) ── */
@@ -64,6 +71,16 @@ p, label, li {
 footer, 
 header[data-testid="stHeader"] {
     display: none !important;
+}
+
+/* ── Alerts & Warnings ── */
+[data-testid="stAlert"] {
+    background: rgba(30, 41, 59, 0.7) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: var(--radius-sm) !important;
+}
+[data-testid="stAlert"] * {
+    color: var(--text-primary) !important;
 }
 
 /* ── Sidebar ── */
