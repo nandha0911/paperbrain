@@ -13,16 +13,14 @@ from __future__ import annotations
 
 import sys
 try:
-    import pysqlite3
-    sys.modules["sqlite3"] = pysqlite3
+    __import__("pysqlite3")
+    sys.modules["sqlite3"] = sys.modules["pysqlite3"]
 except Exception:
     pass
 
 import os
 import time
 from datetime import datetime
-
-import requests
 import streamlit as st
 
 import config

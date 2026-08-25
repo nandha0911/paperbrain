@@ -49,6 +49,7 @@ class VectorStoreService:
 
     def _initialize(self) -> None:
         """Connect to ChromaDB and load (or create) the collection."""
+        config.CHROMA_DIR.mkdir(parents=True, exist_ok=True)
         logger.info(f"Initialising ChromaDB | path={config.CHROMA_DIR}")
         self._client = chromadb.PersistentClient(
             path=str(config.CHROMA_DIR),

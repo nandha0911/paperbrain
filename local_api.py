@@ -3,16 +3,13 @@ from pathlib import Path
 from pydantic import BaseModel
 from services.pdf_service import pdf_service
 from services.vector_store import vector_store
-from services.rag_service import RAGService
+from services.rag_service import rag_service
 from services.llm_service import llm_service
 from services.cache_service import query_cache
 from models.document import DocumentInfo, ProcessingStatus
 from models.chat import ChatRequest, ChatResponse
 from utils.file_utils import sanitize_filename
 from utils.hash_utils import compute_file_hash
-
-# Initialize RAGService once
-rag_service = RAGService()
 
 def api_health() -> dict:
     try:
